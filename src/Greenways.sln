@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Greenways.App", "Greenways.App\Greenways.App.csproj", "{44E0084A-6F4A-4C27-8E15-A14837064E9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Greenways.Service", "Greenways.Service\Greenways.Service.csproj", "{63A2CFCD-749A-4FE6-92FE-5375819A8BEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{51E73BA6-1312-4867-B93D-BE1ED4637009}"
+	ProjectSection(SolutionItems) = preProject
+		nuget.config = nuget.config
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{44E0084A-6F4A-4C27-8E15-A14837064E9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44E0084A-6F4A-4C27-8E15-A14837064E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44E0084A-6F4A-4C27-8E15-A14837064E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44E0084A-6F4A-4C27-8E15-A14837064E9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63A2CFCD-749A-4FE6-92FE-5375819A8BEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63A2CFCD-749A-4FE6-92FE-5375819A8BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63A2CFCD-749A-4FE6-92FE-5375819A8BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63A2CFCD-749A-4FE6-92FE-5375819A8BEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
