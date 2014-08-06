@@ -1,17 +1,39 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>TypeScript HTML App</title>
-    <link rel="stylesheet" href="app.css" type="text/css" />
-    <script src="Scripts/jquery-2.1.1.js"></script>
-    <script src="Scripts/jquery.signalR-2.1.1.js"></script>
-    <script src="app.js"></script>
-</head>
-<body>
-    <h1>TypeScript HTML App</h1>
+<html>
+    <head>
+        
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <div id="content"></div>
-</body>
+        <title>TypeScript HTML App</title>
+        <link rel="stylesheet" href="Content/jquery.mobile-1.4.2.css" type="text/css" />
+
+        <script src="Scripts/jquery-2.1.1.js"></script>
+        <script src="Scripts/jquery.mobile-1.4.2.js"></script>
+        <script src="Scripts/jquery.signalR-2.1.1.js"></script>
+        <script src="Scripts/knockout-3.1.0.js"></script>
+        
+        <script src="app.js"></script>
+        <script src="Data/DataStorage.js"></script>
+        <script src="Models/ChatViewModel.js"></script>
+
+        <link rel="jquerymobile-view" href="Views/Start/Start.html" type="text/html" />
+        <script src="Views/Start/Start.js"></script>
+    
+        <link rel="jquerymobile-view" href="Views/Settings/Settings.html" type="text/html" />
+        <script src="Views/Settings/Settings.js"></script>
+        
+        <link rel="jquerymobile-view" href="Views/Chat/Chats.html" type="text/html" />
+        <script src="Views/Chat/Chats.js"></script>
+        
+        <link rel="jquerymobile-view" href="Views/Chat/ChatEdit.html" type="text/html" />
+        <script src="Views/Chat/ChatEdit.js"></script>
+        
+        <link rel="jquerymobile-view" href="Views/Chat/Chat.html" type="text/html" />
+        <script src="Views/Chat/Chat.js"></script>
+
+    </head>
+    <body>
+    </body>
 </html>

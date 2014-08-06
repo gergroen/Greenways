@@ -1,57 +1,157 @@
 ﻿/// <reference path="Scripts/typings/jquery/jquery.d.ts" />
+/// <reference path="Scripts/typings/jquerymobile/jquerymobile.d.ts" />
 /// <reference path="Scripts/typings/signalr/signalr.d.ts" />
+/// <reference path="Scripts/typings/knockout/knockout.d.ts" />
 
-interface SignalR {
-    testHub: any;
-}
+module Greenways {
 
-class Greeter {
-    element: HTMLElement;
-    span: HTMLElement;
-    timerToken: number;
-
-    constructor(element: HTMLElement) {
-        this.element = element;
-        this.element.innerHTML += "The time is: ";
-        this.span = document.createElement('span');
-        this.element.appendChild(this.span);
-        this.span.innerText = "";
+    export interface IApp {
+        Initialize(): void;
+        NavigateTo(page: string, options?: ChangePageOptions): void;
+        InitializeViewModel(pageId: string, viewModel: IViewModel): void;
     }
 
-    start() {
-        $(document).ready(function() {
-            $.ajaxSetup({ cache: false });
-        });
+    interface IPage {
+        PageId: string;
+        ViewModel: IViewModel;
+        PageInit(): void;
 
-        var dataTimeSpan = this.span;
+    }
 
-        $(function () {
-            var connection = $.hubConnection("http://gerard-laptop:8080");
-            var testhub = connection.createHubProxy('TestHub');
+    export interface IViewModel {
+        ResourceDictionary: IDictionary<IDictionary<string>>;
+        Resources: IDictionary<string>;
+        PageShow(params): void;
+        PageHide(): void;
+    }
 
+    export interface IDictionary<T> {
+        [key: string]: T;
+    }
 
-            testhub.on('SendToClients', function (name) {
-                jQuery.getJSON("http://gerard-laptop/api/test/now", function (data) {
-                    dataTimeSpan.innerHTML = data;
-                });
+    class Page implements IPage {
+
+        constructor(pageId: string, viewModel: IViewModel) {
+            this.PageId = pageId;;
+            this.ViewModel = viewModel;
+        }
+
+        PageId: string;
+        ViewModel: IViewModel;
+
+        PageInit(): void {
+            
+        }
+    }
+
+    class PageEventType {
+        static pagebeforecreate: string = "pagebeforecreate";
+        static pageinit: string = "pageinit";
+        static pageshow: string = "pageshow";
+        static pagehide: string = "pagehide";
+    }
+
+    class AppEngine implements IApp {
+
+        public Initialize(): void {
+            this.LoadViews();
+        }
+
+        public LoadViews(): void {
+            $("head").find("link[rel='jquerymobile-view']").each((index, link) => {
+                var url = $(link).attr("href");
+                var data = this.LoadHtml(url);
+                this.CreatView(data);
             });
+        }
 
-            connection.start().done(function () {
-                alert("connected");
-            }).fail(function () {
-                    alert("failed connect");
+        private CreatView(dataView: any): void {
+            $("body").append(dataView);
+        }
+
+        private LoadHtml(url: string): string {
+            var result = "";
+            $.ajax(url, {
+                async: false,
+                cache: false,
+                dataType: 'html',
+                success: (data) => {
+                    result = data;
+                }
+            });
+            return result;
+        }
+
+        public NavigateTo(page: string, options?: ChangePageOptions): void {
+            $.mobile.changePage(page, options);
+        }
+
+        public CurrentLanguage: string = "en";
+
+        public InitializeViewModel(pageId: string, viewModel: IViewModel): void {
+            var page = new Page(pageId, viewModel);
+
+            $(document).delegate(page.PageId, PageEventType.pagebeforecreate, () => {
+                page.ViewModel.Resources = page.ViewModel.ResourceDictionary[this.CurrentLanguage];
+                ko.applyBindings(page.ViewModel, $(page.PageId)[0]);
+            });
+            $(document).delegate(page.PageId, PageEventType.pageinit, () => {
+                page.PageInit();
+            });
+            $(document).delegate(page.PageId, PageEventType.pageshow, () => {
+                var params = Utils.GetURLParameters();
+                page.ViewModel.PageShow(params);
+            });
+            $(document).delegate(page.PageId, PageEventType.pagehide, () => {
+                page.ViewModel.PageHide();
+            });
+        }
+    }
+
+    class Utils {
+
+        static GetURLParameter(name): string {
+            var data;
+            if (location.hash) {
+                data = location.hash;
+            } else {
+                data = location.href;
+            }
+            return decodeURIComponent(decodeURI(
+                (RegExp(name + '=' + '(.+?)(&|$)').exec(data) || [, null])[1]
+                ));
+        }
+
+        static GetURLParameters(): any {
+            var params = {};
+            var data;
+            if (location.hash) {
+                data = location.hash;
+            } else {
+                data = location.href;
+            }
+            var queryIndex = data.indexOf("?");
+            if (queryIndex > -1) {
+                var queryStr = data.substr(queryIndex + 1, data.length - queryIndex - 1);
+                var values = queryStr.split('&');
+                $.each(values, function (index, item) {
+                    var param = item.split('=');
+                    if (param.length == 2) {
+                        params[param[0]] = param[1];
+                    }
                 });
-        });
+            }
+            return params;
+        }
     }
 
-    stop() {
-        //clearTimeout(this.timerToken);
+    export class Infra {
+        public static App: IApp = new AppEngine();
     }
 
+    $(document).ready(() => {
+        jQuery.ajaxSetup({ cache: false });
+        Greenways.Infra.App.Initialize();
+        Greenways.Infra.App.NavigateTo("#start");
+    });
 }
-
-window.onload = () => {
-    var el = document.getElementById('content');
-    var greeter = new Greeter(el);
-    greeter.start();
-};
