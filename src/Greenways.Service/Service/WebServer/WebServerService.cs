@@ -11,18 +11,11 @@ namespace Greenways.Service.WebServer
     {
         private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
 
-        private string _url;
-        private string _webDirectory;
         private IDisposable _service;
 
-        public int Order { get; private set; }
-
-        public WebServerService(int order, string url, string webDirectory)
-        {
-            Order = order;
-            _url = url;
-            _webDirectory = webDirectory;
-        }
+        public int Order { get; set; }
+        public string Url { get; set; }
+        public string WebDirectory { get; set; }
 
         public bool Start()
         {
@@ -30,12 +23,12 @@ namespace Greenways.Service.WebServer
 
             var staticFileOptions = new StaticFileOptions
             {
-                FileSystem = new PhysicalFileSystem(_webDirectory)
+                FileSystem = new PhysicalFileSystem(WebDirectory)
             };
-            _service = WebApp.Start(_url, x => x.UseStaticFiles(staticFileOptions));
+            _service = WebApp.Start(Url, x => x.UseStaticFiles(staticFileOptions));
 
             Logger.Info("Started");
-            Logger.InfoFormat("Listening on {0}", _url);
+            Logger.InfoFormat("Listening on {0}", Url);
             return true;
         }
 

@@ -12,16 +12,14 @@ namespace Greenways.Service.SignalR
         private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
         private IDisposable _service;
         private readonly IDependencyResolver _dependencyResolver;
-        private readonly string _url;
 
-        public SignalRService(int order, string url, IDependencyResolver dependencyResolver)
+        public SignalRService(IDependencyResolver dependencyResolver)
         {
-            Order = order;
-            _url = url;
             _dependencyResolver = dependencyResolver;
         }
 
-        public int Order { get; private set; }
+        public int Order { get; set; }
+        public string Url { get; set; }
 
         public bool Start()
         {
@@ -31,7 +29,7 @@ namespace Greenways.Service.SignalR
             {
                 var config = new HubConfiguration();
                 config.Resolver = _dependencyResolver;
-                _service = WebApp.Start(_url, x => Configuration(x, config));
+                _service = WebApp.Start(Url, x => Configuration(x, config));
             }
             catch (Exception ex)
             {
@@ -40,7 +38,7 @@ namespace Greenways.Service.SignalR
             }
 
             Logger.Info("Started");
-            Logger.InfoFormat("Listening on {0}", _url);
+            Logger.InfoFormat("Listening on {0}", Url);
             return true;
         }
 

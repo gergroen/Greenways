@@ -11,18 +11,19 @@ var Greenways;
         }
         StartPageViewModel.prototype.PageShow = function (params) {
             var self = this;
-            var connection = $.hubConnection("http://localhost:8080");
-            var testhub = connection.createHubProxy('TestHub');
+            self.connection = $.hubConnection("http://localhost:8080");
+            var testhub = self.connection.createHubProxy('TestHub');
             testhub.on('SendToClients', function (name) {
                 jQuery.getJSON("http://localhost/api/test/now", function (data) {
-                    self.DateTime(data);
+                    self.DateTime(new Date(data).toString());
                 });
             });
 
-            connection.start();
+            self.connection.start();
         };
 
         StartPageViewModel.prototype.PageHide = function () {
+            this.connection.stop();
         };
         return StartPageViewModel;
     })();

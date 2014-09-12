@@ -7,6 +7,7 @@ using Greenways.Service.SignalR.Ninject;
 using Greenways.Service.WebApi;
 using Greenways.Service.WebApi.Ninject;
 using Greenways.Service.WebServer;
+using Greenways.Utils.Ninject;
 using Ninject.Modules;
 using Quartz;
 using Quartz.Spi;
@@ -25,18 +26,17 @@ namespace Greenways.Config
             Bind<ISchedulerFactory>().To<QuartzNinjectSchedulerFactory>();
 
             Bind<IService>().To<WebApiService>()
-                .WithConstructorArgument("order", 1)
-                .WithConstructorArgument("url", "http://*/api/");
+                .WithPropertyValue(x => x.Order, 1)
+                .WithPropertyValue(x => x.Url, "http://*/api/");
             Bind<IService>().To<SignalRService>()
-                .WithConstructorArgument("order", 1)
-                .WithConstructorArgument("url", "http://*:8080/signalr/");
+                .WithPropertyValue(x => x.Order, 1)
+                .WithPropertyValue(x => x.Url, "http://*:8080/signalr/");
             Bind<IService>().To<QuartzService>()
-                .WithConstructorArgument("order", 2);
+                .WithPropertyValue(x => x.Order, 2);
             Bind<IService>().To<WebServerService>()
-                .WithConstructorArgument("order", 3)
-                .WithConstructorArgument("url", "http://*/www/")
-                .WithConstructorArgument("webDirectory", @"C:\Data\Development\Source\Microsoft.Net\Greenways\src\Greenways.App\");
-
+                .WithPropertyValue(x => x.Order, 3)
+                .WithPropertyValue(x => x.Url, "http://*/www/")
+                .WithPropertyValue(x => x.WebDirectory, @"C:\Data\Development\Source\Microsoft.Net\Greenways\src\Greenways.App\");
 
             Bind<IQuartzJobConfig>().To<QuartzJobConfig<TestJob>>();
             var trigger = TriggerBuilder.Create()

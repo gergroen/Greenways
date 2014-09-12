@@ -10,7 +10,7 @@ namespace Greenways.Service.WebApi.Controllers
         [HttpGet]
         public string Now()
         {
-            return DateTime.Now.ToString("U");
+            return DateTime.Now.ToString("o");
         }
 
         [HttpGet]

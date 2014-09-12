@@ -134,7 +134,7 @@ module Greenways {
             if (queryIndex > -1) {
                 var queryStr = data.substr(queryIndex + 1, data.length - queryIndex - 1);
                 var values = queryStr.split('&');
-                $.each(values, function (index, item) {
+                $.each(values, (index, item) => {
                     var param = item.split('=');
                     if (param.length == 2) {
                         params[param[0]] = param[1];

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Common.Logging;
-using Greenways.Service.Quartz.Jobs;
 using Quartz;
 
 namespace Greenways.Service.Quartz
@@ -10,9 +9,8 @@ namespace Greenways.Service.Quartz
         private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
         private readonly IScheduler _scheduler;
 
-        public QuartzService(int order, ISchedulerFactory schedulerFactory, IList<IQuartzJobConfig> jobConfigs)
+        public QuartzService(ISchedulerFactory schedulerFactory, IList<IQuartzJobConfig> jobConfigs)
         {
-            Order = order;
             _scheduler = schedulerFactory.GetScheduler();
 
             foreach (var jobConfig in jobConfigs)
@@ -21,7 +19,7 @@ namespace Greenways.Service.Quartz
             }
         }
 
-        public int Order { get; private set; }
+        public int Order { get; set; }
 
         public bool Start()
         {

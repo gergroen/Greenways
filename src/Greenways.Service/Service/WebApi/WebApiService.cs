@@ -11,16 +11,14 @@ namespace Greenways.Service.WebApi
     public class WebApiService : IService
     {
         private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
-        private readonly string _url;
         private readonly IDependencyResolver _dependencyResolver;
         private IDisposable _service;
 
-        public int Order { get; private set; }
+        public int Order { get; set; }
+        public string Url { get; set; }
 
-        public WebApiService(int order, string url, IDependencyResolver dependencyResolver)
+        public WebApiService(IDependencyResolver dependencyResolver)
         {
-            Order = order;
-            _url = url;
             _dependencyResolver = dependencyResolver;
         }
 
@@ -34,7 +32,7 @@ namespace Greenways.Service.WebApi
 
             try
             {
-                _service = WebApp.Start(_url, x => Configuration(x,config));
+                _service = WebApp.Start(Url, x => Configuration(x, config));
             }
             catch (Exception ex)
             {
@@ -43,7 +41,7 @@ namespace Greenways.Service.WebApi
             }
 
             Logger.Info("Started");
-            Logger.InfoFormat("Listening on {0}", _url);
+            Logger.InfoFormat("Listening on {0}", Url);
             return true;
         }
 
