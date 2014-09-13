@@ -18,6 +18,8 @@ namespace Greenways.Config
     {
         public override void Load()
         {
+            var appSettings = System.Configuration.ConfigurationManager.AppSettings;
+
             Bind<CompositeService>().ToSelf();
 
             Bind<Microsoft.AspNet.SignalR.IDependencyResolver>().To<SignalRNinjectDependencyResolver>();
@@ -27,16 +29,16 @@ namespace Greenways.Config
 
             Bind<IService>().To<WebApiService>()
                 .WithPropertyValue(x => x.Order, 1)
-                .WithPropertyValue(x => x.Url, "http://*/api/");
+                .WithPropertyValue(x => x.Url, appSettings["WebApiUrl"]);
             Bind<IService>().To<SignalRService>()
                 .WithPropertyValue(x => x.Order, 1)
-                .WithPropertyValue(x => x.Url, "http://*:8080/signalr/");
+                .WithPropertyValue(x => x.Url, appSettings["SignalRUrl"]);
             Bind<IService>().To<QuartzService>()
                 .WithPropertyValue(x => x.Order, 2);
             Bind<IService>().To<WebServerService>()
                 .WithPropertyValue(x => x.Order, 3)
-                .WithPropertyValue(x => x.Url, "http://*/www/")
-                .WithPropertyValue(x => x.WebDirectory, @"C:\Data\Development\Source\Microsoft.Net\Greenways\src\Greenways.App\");
+                .WithPropertyValue(x => x.Url, appSettings["WebServerUrl"])
+                .WithPropertyValue(x => x.WebDirectory, appSettings["WebServerDirectory"]);
 
             Bind<IQuartzJobConfig>().To<QuartzJobConfig<TestJob>>();
             var trigger = TriggerBuilder.Create()
