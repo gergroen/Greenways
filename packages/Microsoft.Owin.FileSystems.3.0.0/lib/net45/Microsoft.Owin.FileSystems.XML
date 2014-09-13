@@ -4,12 +4,6 @@
         <name>Microsoft.Owin.FileSystems</name>
     </assembly>
     <members>
-        <member name="T:System.Reflection.AssemblyMetadataAttribute">
-            <summary>
-            Provided as a down-level stub for the 4.5 AssemblyMetaDataAttribute class.
-            All released assemblies should define [AssemblyMetadata("Serviceable", "True")].
-            </summary>
-        </member>
         <member name="T:Microsoft.Owin.FileSystems.EmbeddedResourceFileSystem">
             <summary>
             Looks up files using embedded resources in the specified assembly.
