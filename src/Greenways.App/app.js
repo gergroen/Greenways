@@ -1,4 +1,4 @@
-﻿/// <reference path="Scripts/typings/jquery/jquery.d.ts" />
+/// <reference path="Scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="Scripts/typings/jquerymobile/jquerymobile.d.ts" />
 /// <reference path="Scripts/typings/signalr/signalr.d.ts" />
 /// <reference path="Scripts/typings/knockout/knockout.d.ts" />
@@ -13,8 +13,7 @@ var Greenways;
         Page.prototype.PageInit = function () {
         };
         return Page;
-    })();
-
+    }());
     var PageEventType = (function () {
         function PageEventType() {
         }
@@ -23,8 +22,7 @@ var Greenways;
         PageEventType.pageshow = "pageshow";
         PageEventType.pagehide = "pagehide";
         return PageEventType;
-    })();
-
+    }());
     var AppEngine = (function () {
         function AppEngine() {
             this.CurrentLanguage = "en";
@@ -32,7 +30,6 @@ var Greenways;
         AppEngine.prototype.Initialize = function () {
             this.LoadViews();
         };
-
         AppEngine.prototype.LoadViews = function () {
             var _this = this;
             $("head").find("link[rel='jquerymobile-view']").each(function (index, link) {
@@ -41,11 +38,9 @@ var Greenways;
                 _this.CreatView(data);
             });
         };
-
         AppEngine.prototype.CreatView = function (dataView) {
             $("body").append(dataView);
         };
-
         AppEngine.prototype.LoadHtml = function (url) {
             var result = "";
             $.ajax(url, {
@@ -58,15 +53,12 @@ var Greenways;
             });
             return result;
         };
-
         AppEngine.prototype.NavigateTo = function (page, options) {
             $.mobile.changePage(page, options);
         };
-
         AppEngine.prototype.InitializeViewModel = function (pageId, viewModel) {
             var _this = this;
             var page = new Page(pageId, viewModel);
-
             $(document).delegate(page.PageId, PageEventType.pagebeforecreate, function () {
                 page.ViewModel.Resources = page.ViewModel.ResourceDictionary[_this.CurrentLanguage];
                 ko.applyBindings(page.ViewModel, $(page.PageId)[0]);
@@ -83,8 +75,7 @@ var Greenways;
             });
         };
         return AppEngine;
-    })();
-
+    }());
     var Utils = (function () {
         function Utils() {
         }
@@ -92,18 +83,19 @@ var Greenways;
             var data;
             if (location.hash) {
                 data = location.hash;
-            } else {
+            }
+            else {
                 data = location.href;
             }
             return decodeURIComponent(decodeURI((RegExp(name + '=' + '(.+?)(&|$)').exec(data) || [, null])[1]));
         };
-
         Utils.GetURLParameters = function () {
             var params = {};
             var data;
             if (location.hash) {
                 data = location.hash;
-            } else {
+            }
+            else {
                 data = location.href;
             }
             var queryIndex = data.indexOf("?");
@@ -120,16 +112,14 @@ var Greenways;
             return params;
         };
         return Utils;
-    })();
-
+    }());
     var Infra = (function () {
         function Infra() {
         }
         Infra.App = new AppEngine();
         return Infra;
-    })();
+    }());
     Greenways.Infra = Infra;
-
     $(document).ready(function () {
         jQuery.ajaxSetup({ cache: false });
         Greenways.Infra.App.Initialize();

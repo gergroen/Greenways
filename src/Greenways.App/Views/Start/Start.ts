@@ -15,10 +15,10 @@ module Greenways {
 
         PageShow(params): void {
             var self = this;
-            self.connection = $.hubConnection("http://localhost:8080");
+            self.connection = $.hubConnection("http://localhost/green");
             var testhub = self.connection.createHubProxy('TestHub');
             testhub.on('SendToClients', function(name) {
-                jQuery.getJSON("http://localhost/api/test/now", function(data) {
+                jQuery.getJSON("http://localhost/green/api/test/now", function(data) {
                     self.DateTime(new Date(data).toString());
                 });
             });

@@ -1,4 +1,4 @@
-﻿///<reference path="../../app.ts"/>
+///<reference path="../../app.ts"/>
 var Greenways;
 (function (Greenways) {
     var ChatPageViewModel = (function () {
@@ -7,12 +7,10 @@ var Greenways;
         }
         ChatPageViewModel.prototype.PageShow = function (params) {
         };
-
         ChatPageViewModel.prototype.PageHide = function () {
         };
         return ChatPageViewModel;
-    })();
-
+    }());
     Greenways.Infra.App.InitializeViewModel("#chat", new ChatPageViewModel());
 })(Greenways || (Greenways = {}));
 //# sourceMappingURL=Chat.js.map

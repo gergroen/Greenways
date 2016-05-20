@@ -1,38 +1,35 @@
+﻿using Common.Logging;
 using System;
-using System.Web.Http;
-using System.Web.Http.Dependencies;
-using Common.Logging;
-using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
 using Owin;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Greenways.Service.WebApi
+namespace Greenways.Service.Owin
 {
-    public class WebApiService : IService
+    public class OwinHostService : IService
     {
         private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
-        private readonly IDependencyResolver _dependencyResolver;
+
         private IDisposable _service;
 
         public int Order { get; set; }
         public string Url { get; set; }
 
-        public WebApiService(IDependencyResolver dependencyResolver)
+        private readonly IList<IOwinService> _owinServices;
+
+        public OwinHostService(IList<IOwinService> owinServices)
         {
-            _dependencyResolver = dependencyResolver;
+            _owinServices = owinServices;
         }
 
         public bool Start()
         {
             Logger.Info("Starting");
 
-            var config = new HttpConfiguration();
-            config.Routes.MapHttpRoute("API Default", "{controller}/{action}", new { action = "Index" });
-            config.DependencyResolver = _dependencyResolver;
-
             try
             {
-                _service = WebApp.Start(Url, x => Configuration(x, config));
+                _service = WebApp.Start(Url, x => Configuration(x));
             }
             catch (Exception ex)
             {
@@ -45,10 +42,12 @@ namespace Greenways.Service.WebApi
             return true;
         }
 
-        private void Configuration(IAppBuilder appBuilder, HttpConfiguration config)
+        private void Configuration(IAppBuilder appBuilder)
         {
-            appBuilder.UseCors(CorsOptions.AllowAll);
-            appBuilder.UseWebApi(config);
+            foreach (var owinService in _owinServices.OrderBy(x => x.Order))
+            {
+                owinService.Configuration(appBuilder);
+            }
         }
 
         public bool Stop()
@@ -57,6 +56,11 @@ namespace Greenways.Service.WebApi
 
             if (_service != null)
             {
+                foreach (var owinService in _owinServices.OrderByDescending(x => x.Order))
+                {
+                    owinService.Dispose();
+                }
+
                 _service.Dispose();
                 _service = null;
             }

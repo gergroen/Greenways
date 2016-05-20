@@ -1,5 +1,6 @@
-﻿var Greenways;
+var Greenways;
 (function (Greenways) {
+    var Data;
     (function (Data) {
         var DataStorageFactory = (function () {
             function DataStorageFactory() {
@@ -8,23 +9,21 @@
                 return new IndexedDbDataStorage("App", 1.0, storeName, dataCreateInstance, onReady);
             };
             return DataStorageFactory;
-        })();
+        }());
         Data.DataStorageFactory = DataStorageFactory;
-
         var Guid = (function () {
             function Guid() {
             }
             Guid.s4 = function () {
                 return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
             };
-
             Guid.NewGuid = function () {
-                return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + this.s4() + this.s4();
+                return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' +
+                    this.s4() + '-' + this.s4() + this.s4() + this.s4();
             };
             return Guid;
-        })();
+        }());
         Data.Guid = Guid;
-
         var IndexedDbDataStorage = (function () {
             function IndexedDbDataStorage(dbName, dbVersion, storeName, dataCreateInstance, onReady) {
                 var self = this;
@@ -32,7 +31,6 @@
                 self.dbVersion = dbVersion;
                 self.storeName = storeName;
                 self.DataCreateInstance = dataCreateInstance;
-
                 window.indexedDB.deleteDatabase(this.dbName);
                 var request = window.indexedDB.open(this.dbName, this.dbVersion);
                 request.onsuccess = function () {
@@ -56,7 +54,6 @@
                     onReady();
                 });
             };
-
             IndexedDbDataStorage.prototype.Select = function (key, onReady) {
                 var _this = this;
                 this.databaseFunction(function (db) {
@@ -72,7 +69,6 @@
                     };
                 });
             };
-
             IndexedDbDataStorage.prototype.Update = function (data, onReady) {
                 var _this = this;
                 this.databaseFunction(function (db) {
@@ -84,7 +80,6 @@
                     onReady();
                 });
             };
-
             IndexedDbDataStorage.prototype.Delete = function (key, onReady) {
                 var _this = this;
                 this.databaseFunction(function (db) {
@@ -95,7 +90,6 @@
                     onReady();
                 });
             };
-
             IndexedDbDataStorage.prototype.databaseFunction = function (dbFunction) {
                 var request = window.indexedDB.open(this.dbName, this.dbVersion);
                 request.onsuccess = function () {
@@ -104,8 +98,7 @@
                 };
             };
             return IndexedDbDataStorage;
-        })();
-    })(Greenways.Data || (Greenways.Data = {}));
-    var Data = Greenways.Data;
+        }());
+    })(Data = Greenways.Data || (Greenways.Data = {}));
 })(Greenways || (Greenways = {}));
 //# sourceMappingURL=DataStorage.js.map

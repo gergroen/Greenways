@@ -1,6 +1,7 @@
-﻿///<reference path="../Data/DataStorage.ts"/>
+///<reference path="../Data/DataStorage.ts"/>
 var Greenways;
 (function (Greenways) {
+    var Models;
     (function (Models) {
         var ChatViewModel = (function () {
             function ChatViewModel(jsData) {
@@ -8,7 +9,8 @@ var Greenways;
                 this.Name = ko.observable();
                 if (jsData) {
                     this.fromJs(jsData);
-                } else {
+                }
+                else {
                     this.Id(Greenways.Data.Guid.NewGuid());
                 }
             }
@@ -16,7 +18,6 @@ var Greenways;
                 this.Id(jsData.Id);
                 this.Name(jsData.Name);
             };
-
             ChatViewModel.prototype.toJs = function () {
                 return {
                     Id: this.Id(),
@@ -24,9 +25,8 @@ var Greenways;
                 };
             };
             return ChatViewModel;
-        })();
+        }());
         Models.ChatViewModel = ChatViewModel;
-    })(Greenways.Models || (Greenways.Models = {}));
-    var Models = Greenways.Models;
+    })(Models = Greenways.Models || (Greenways.Models = {}));
 })(Greenways || (Greenways = {}));
 //# sourceMappingURL=ChatViewModel.js.map

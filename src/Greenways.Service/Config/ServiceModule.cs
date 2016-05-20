@@ -1,4 +1,5 @@
 ﻿using Greenways.Service;
+using Greenways.Service.Owin;
 using Greenways.Service.Quartz;
 using Greenways.Service.Quartz.Jobs;
 using Greenways.Service.Quartz.Ninject;
@@ -24,25 +25,28 @@ namespace Greenways.Config
 
             Bind<Microsoft.AspNet.SignalR.IDependencyResolver>().To<SignalRNinjectDependencyResolver>();
             Bind<System.Web.Http.Dependencies.IDependencyResolver>().To<WebApiNinjectDependencyResolver>();
+
+            Bind<IService>().To<OwinHostService>()
+                .WithPropertyValue(x => x.Order, 1)
+                .WithPropertyValue(x => x.Url, appSettings["Url"]);
+
+            Bind<IOwinService>().To<SignalRService>()
+                .WithPropertyValue(x => x.Order, 1);
+            Bind<IOwinService>().To<WebApiService>()
+                .WithPropertyValue(x => x.Order, 2);
+            Bind<IOwinService>().To<WebServerService>()
+                .WithPropertyValue(x => x.Order, 3)
+                .WithPropertyValue(x => x.WebDirectory, appSettings["WebServerDirectory"]);
+
             Bind<IJobFactory>().To<QuartzNinjectJobFactory>();
             Bind<ISchedulerFactory>().To<QuartzNinjectSchedulerFactory>();
 
-            Bind<IService>().To<WebApiService>()
-                .WithPropertyValue(x => x.Order, 1)
-                .WithPropertyValue(x => x.Url, appSettings["WebApiUrl"]);
-            Bind<IService>().To<SignalRService>()
-                .WithPropertyValue(x => x.Order, 1)
-                .WithPropertyValue(x => x.Url, appSettings["SignalRUrl"]);
             Bind<IService>().To<QuartzService>()
                 .WithPropertyValue(x => x.Order, 2);
-            Bind<IService>().To<WebServerService>()
-                .WithPropertyValue(x => x.Order, 3)
-                .WithPropertyValue(x => x.Url, appSettings["WebServerUrl"])
-                .WithPropertyValue(x => x.WebDirectory, appSettings["WebServerDirectory"]);
 
             Bind<IQuartzJobConfig>().To<QuartzJobConfig<TestJob>>();
             var trigger = TriggerBuilder.Create()
-                .StartNow().WithCronSchedule("* * * * * ?")
+                .StartNow().WithCronSchedule("0/5 * * * * ?")
                 .Build();
             Bind<QuartzTrigger<TestJob>>().ToSelf()
                 .WithConstructorArgument("trigger", trigger);

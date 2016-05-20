@@ -134,6 +134,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Service\Owin\IOwinService.cs" />
+    <Compile Include="Service\Owin\OwinHostService.cs" />
     <Compile Include="Utils\Ninject\BindingSyntaxExtension.cs" />
     <Compile Include="Service\IService.cs" />
     <Compile Include="Program.cs" />
@@ -144,14 +146,14 @@
     <Compile Include="Service\Quartz\Ninject\QuartzNinjectJobFactory.cs" />
     <Compile Include="Service\Quartz\QuartzJobConfig.cs" />
     <Compile Include="Service\Quartz\QuartzService.cs" />
-    <Compile Include="Service\SignalR\Hubs\TestHub.cs" />
-    <Compile Include="Service\SignalR\Ninject\SignalRNinjectDependencyResolver.cs" />
-    <Compile Include="Service\SignalR\SignalRService.cs" />
-    <Compile Include="Service\WebApi\Controllers\TestController.cs" />
-    <Compile Include="Service\WebApi\Ninject\WebApiNinjectDependencyResolver.cs" />
-    <Compile Include="Service\WebApi\Ninject\WebApiNinjectDependencyScope.cs" />
-    <Compile Include="Service\WebServer\WebServerService.cs" />
-    <Compile Include="Service\WebApi\WebApiService.cs" />
+    <Compile Include="Service\Owin\SignalR\Hubs\TestHub.cs" />
+    <Compile Include="Service\Owin\SignalR\Ninject\SignalRNinjectDependencyResolver.cs" />
+    <Compile Include="Service\Owin\SignalR\SignalRService.cs" />
+    <Compile Include="Service\Owin\WebApi\Controllers\TestController.cs" />
+    <Compile Include="Service\Owin\WebApi\Ninject\WebApiNinjectDependencyResolver.cs" />
+    <Compile Include="Service\Owin\WebApi\Ninject\WebApiNinjectDependencyScope.cs" />
+    <Compile Include="Service\Owin\WebServer\WebServerService.cs" />
+    <Compile Include="Service\Owin\WebApi\WebApiService.cs" />
     <Compile Include="Config\ServiceModule.cs" />
   </ItemGroup>
   <ItemGroup>
