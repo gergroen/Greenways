@@ -11,7 +11,7 @@ module Greenways {
         
         DateTime: KnockoutObservable<string> = ko.observable<string>("");
 
-        connection: HubConnection;
+        connection: SignalR.Hub.Connection;
 
         PageShow(params): void {
             var self = this;
