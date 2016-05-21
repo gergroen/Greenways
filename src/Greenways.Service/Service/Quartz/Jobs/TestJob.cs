@@ -12,7 +12,8 @@ namespace Greenways.Service.Quartz.Jobs
         {
             Logger.Info("Executing");
 
-            using (var hubConnection = new HubConnection("http://localhost/green")) {
+            using (var hubConnection = new HubConnection("http://localhost/green"))
+            {
                 var testHubProxy = hubConnection.CreateHubProxy("TestHub");
                 hubConnection.Start().Wait();
                 testHubProxy.Invoke("Send", "Tick");

@@ -20,7 +20,7 @@ namespace Greenways.Service.Quartz
         public ITrigger Trigger { get; private set; }
     }
 
-    public class QuartzTrigger<TJob> where TJob : IJob 
+    public class QuartzTrigger<TJob> where TJob : IJob
     {
         public QuartzTrigger(ITrigger trigger)
         {

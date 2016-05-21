@@ -2,7 +2,6 @@ using System;
 using System.Web.Http;
 using System.Web.Http.Dependencies;
 using Common.Logging;
-using Microsoft.Owin.Cors;
 using Owin;
 using Greenways.Service.Owin;
 

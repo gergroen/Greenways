@@ -1,7 +1,6 @@
 ﻿using System;
 using Common.Logging;
 using Microsoft.AspNet.SignalR;
-using Microsoft.Owin.Cors;
 using Owin;
 using Greenways.Service.Owin;
 
@@ -9,7 +8,7 @@ namespace Greenways.Service.SignalR
 {
     public class SignalRService : IOwinService
     {
-        private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(SignalRService));
         private IDisposable _service;
         private readonly IDependencyResolver _dependencyResolver;
 

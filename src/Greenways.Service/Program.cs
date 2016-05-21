@@ -11,6 +11,7 @@ namespace Greenways
         {
             HostFactory.Run(c =>
             {
+                c.UseLog4Net();
                 c.UseNinject(new ServiceModule());
                 c.Service<CompositeService>(s =>
                 {

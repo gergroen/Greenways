@@ -15,7 +15,7 @@ namespace Greenways.Service.Quartz
 
             foreach (var jobConfig in jobConfigs)
             {
-                _scheduler.ScheduleJob(jobConfig.JobDetail, jobConfig.Trigger); 
+                _scheduler.ScheduleJob(jobConfig.JobDetail, jobConfig.Trigger);
             }
         }
 
