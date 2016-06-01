@@ -1,0 +1,1 @@
+"%~dp0Greenways.Service" stop

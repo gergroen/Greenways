@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Greenways.Service.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -144,10 +145,6 @@
       <HintPath>..\..\packages\Topshelf.4.0.1\lib\net452\Topshelf.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Topshelf.Log4Net">
-      <HintPath>..\..\packages\Topshelf.Log4Net.4.0.1\lib\net452\Topshelf.Log4Net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Topshelf.Ninject">
       <HintPath>..\..\packages\Topshelf.Ninject.0.4.0.0\lib\net45\Topshelf.Ninject.dll</HintPath>
       <Private>True</Private>
@@ -189,6 +186,18 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="_install.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_start.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_stop.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="_uninstall.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logs\readme.txt">
